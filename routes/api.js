@@ -154,7 +154,7 @@ router.get("/leaderboards", function (req, res, next) {
     var request = new sql.Request();
     request.query(
       `
-      SELECT id from leaderboard;
+      SELECT id, name from leaderboard;
     `,
       function (err, recordset) {
         if (err){

@@ -5,6 +5,19 @@ window.aocUU = new function () {
     this.config = {
     };
 
+    this.leaderBoardAction = function(data){
+        if (!aocUU.uuid){
+            console.error("No uuid set");
+            return;
+        }
+        let url = `${aocUU.host}/api/${data.action}Leaderboard`;
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        data["userid"] = aocUU.uuid;
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(data));
+    }
+
     this.registerExt = function (cb) {
         let xhr = new XMLHttpRequest();
         xhr.open("GET", `${aocUU.host}/api/registerExt`);

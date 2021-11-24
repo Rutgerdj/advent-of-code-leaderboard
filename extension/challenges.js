@@ -30,19 +30,18 @@ aocUU.Challenges = new function () {
     }
 
     this.postChallengeUpdate = function(year, day){
-        if (!aocUU.config.leaderboardId || !aocUU.uuid){
-            console.error("No leaderboardid or userid set");
-            alert("No leaderboardid or userid set");
+        if (!aocUU.uuid){
+            console.error("No userid set");
+            alert("No userid set");
             return;
         }
         let c = this.challenges[year][day];
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", `${aocUU.host}/api/leaderboard/${aocUU.config.leaderboardId}/${c.year}/${c.day}`);
+        xhr.open("POST", `${aocUU.host}/api/leaderboard/${c.year}/${c.day}`);
         xhr.setRequestHeader("Content-Type", "application/json");
         let obj = JSON.parse(JSON.stringify(c));
         obj["userid"] = aocUU.uuid;
         xhr.send(JSON.stringify(obj));
-
     }
 
     this.updateChallenge = function (year, day, progress){

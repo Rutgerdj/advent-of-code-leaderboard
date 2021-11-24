@@ -25,14 +25,15 @@ router.get("/:leaderboardId/:year?/:day?", function (req, res, next) {
     request.input("day", req.params.day);
     request.query(
       `
-      SELECT year, day, username, startTime, starOne, starTwo FROM challenges 
-      INNER JOIN users on users.userid = challenges.userid
-      WHERE 
-        (year = @year or @year is null)
-        and
-        (day = @day or @day is null)
-        and 
-        (leaderboardId = @leaderboardId or @leaderboardId is null)
+      SELECT year, day, username, startTime, starOne, starTwo FROM user_leaderboards ul
+        INNER JOIN challenges ON challenges.userid = ul.userid
+        INNER JOIN users ON users.userid = ul.userid
+      WHERE
+        (leaderboardId = @leaderboardId OR @leaderboardId IS NULL)
+        AND
+        (year = @year OR @year IS NULL)
+        AND 
+        (day = @day OR @day IS NULL)
     `,
       function (err, recordset) {
         if (err){
@@ -47,7 +48,7 @@ router.get("/:leaderboardId/:year?/:day?", function (req, res, next) {
 });
 
 
-router.post("/:leaderboardId/:year/:day", function (req, res, next) {
+router.post("/:year/:day", function (req, res, next) {
   
   if (!req.params.year || !req.params.day || !req.body.userid){
     console.log("watt?S")
@@ -58,7 +59,6 @@ router.post("/:leaderboardId/:year/:day", function (req, res, next) {
     if (err) console.log(err);
     var request = new sql.Request();
     
-    request.input("lid", req.params.leaderboardId.slice(0, 36));
     request.input("uid", req.body.userid.slice(0, 36));
     request.input("yr", req.params.year);
     request.input("dy", req.params.day);
@@ -68,7 +68,6 @@ router.post("/:leaderboardId/:year/:day", function (req, res, next) {
     
     request.query(`
       EXEC updateProgress
-        @leaderboardId = @lid,
         @userid = @uid,
         @year = @yr,
         @day = @dy,

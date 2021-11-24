@@ -29,6 +29,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       aocUU.forceUpdateProgress(message.url);
       break;
 
+    case "leaderboardAction":
+      aocUU.leaderBoardAction(message);
+      break;
 
     case "onChallengePage":
       aocUU.Challenges.onChallengePage(message.year, message.day, message.progress);

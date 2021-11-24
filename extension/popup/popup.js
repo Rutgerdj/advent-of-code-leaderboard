@@ -24,10 +24,11 @@ document.querySelectorAll(".leaderboardBtn").forEach((btn) => {
         chrome.runtime.sendMessage({
             command: "leaderboardAction",
             leaderboardId: document.querySelector("#leaderboardId").value,
-            action: btn.getAttribute("data-action")
+            action: btn.getAttribute("data-action"),
+            name: document.querySelector("#leaderboardName").value
         }, () => {});
     }); 
-})
+});
 
 
 chrome.runtime.sendMessage({

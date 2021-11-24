@@ -66,9 +66,35 @@ router.post("/joinLeaderboard", function (req, res, next) {
   });
 });
 
+router.post("/renameLeaderboard", function (req, res, next) {
+  if (!req.body.name || !req.body.leaderboardId){
+    res.sendStatus(400).send("Wrong data supplied");
+    return;
+  } 
+  sql.connect(config, function (err) {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500).send("Server error");
+      return;
+    }
+    var request = new sql.Request();
+    request.input("n", req.body.name);
+    request.input("lid", req.body.leaderboardId);
+    request.query(`EXEC renameLeaderboard @leaderboardId=@lid, @name=@n`, (err, results) => {
+      if (err){
+        console.log(err);
+        res.sendStatus(500).send("Server Error");
+        return;
+      }
+      res.sendStatus(200);
+    });
+  });  
+})
+
 router.post("/leaveLeaderboard", function (req, res, next) {
   if (!req.body.userid || !req.body.leaderboardId){
     res.sendStatus(400).send("Wrong data supplied");
+    return;
   }
   sql.connect(config, function (err) {
     if (err) {

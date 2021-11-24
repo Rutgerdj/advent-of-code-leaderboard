@@ -5,6 +5,11 @@ At this time it is only possible to use the extension on a chromium based browse
 Can be installed as follows:\
 settings -> more tools -> extensions -> toggle developer mode -> load unpacked
 
-### Setup
-You need to set a leaderboard identifier before the extension can work.\
-This can be done by clicking on the extension icon in your browsers' menubar. In the popup you can set the leaderboardId (as well as a username).
+### Updating the extension
+When you want to update the extension you should not uninstall the old version and then install the new version.\
+Instead you should replace the old files with the new files and click on the refresh icon for the extension on the `chrome://extensions/` page.
+
+### Usage
+You can just browse AOC like you normally would, once you complete a challenge your progress is automatically saved. 
+
+Via the popup of the extension (click the icon in the menubar) you can join or leave a leaderboard. 

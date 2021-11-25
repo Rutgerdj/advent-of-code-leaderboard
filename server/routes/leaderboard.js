@@ -58,13 +58,32 @@ router.post("/:year/:day", function (req, res, next) {
     if (err) console.log(err);
     var request = new sql.Request();
     
+
+    let start = new Date(req.body.startTime);
+    let starOne = null;
+    let starTwo = null;
+
+    if (req.body.starOne){
+      starOne = new Date(req.body.starOne);
+      if (starOne - start < 2000){
+        starOne.setMinutes(starOne.getMinutes() + 5);
+      }
+      start = starOne;
+    }
+    if (req.body.starTwo){
+      starTwo = new Date(req.body.starTwo);
+      if (starTwo - start < 200){
+        starTwo.setMinutes(starTwo.getMinutes() + 5);
+      }
+    }
+
     request.input("uid", req.body.userid.slice(0, 36));
     request.input("yr", req.params.year);
     request.input("dy", req.params.day);
     request.input("sTime", req.body.startTime);
-    request.input("star1", req.body.starOne);
-    request.input("star2", req.body.starTwo);
-    
+    request.input("star1", starOne);
+    request.input("star2", starTwo);
+
     request.query(`
       EXEC updateProgress
         @userid = @uid,

@@ -68,13 +68,13 @@ router.post("/joinLeaderboard", function (req, res, next) {
 
 router.post("/renameLeaderboard", function (req, res, next) {
   if (!req.body.name || !req.body.leaderboardId){
-    res.sendStatus(400).send("Wrong data supplied");
+    res.sendStatus(400);
     return;
   } 
   sql.connect(config, function (err) {
     if (err) {
       console.log(err);
-      res.sendStatus(500).send("Server error");
+      res.sendStatus(500);
       return;
     }
     var request = new sql.Request();
@@ -83,7 +83,7 @@ router.post("/renameLeaderboard", function (req, res, next) {
     request.query(`EXEC renameLeaderboard @leaderboardId=@lid, @name=@n`, (err, results) => {
       if (err){
         console.log(err);
-        res.sendStatus(500).send("Server Error");
+        res.sendStatus(500);
         return;
       }
       res.sendStatus(200);
@@ -93,13 +93,13 @@ router.post("/renameLeaderboard", function (req, res, next) {
 
 router.post("/leaveLeaderboard", function (req, res, next) {
   if (!req.body.userid || !req.body.leaderboardId){
-    res.sendStatus(400).send("Wrong data supplied");
+    res.sendStatus(400);
     return;
   }
   sql.connect(config, function (err) {
     if (err) {
       console.log(err);
-      res.sendStatus(500).send("Server error");
+      res.sendStatus(500);
       return;
     }
     var request = new sql.Request();
@@ -108,7 +108,7 @@ router.post("/leaveLeaderboard", function (req, res, next) {
     request.query(`DELETE FROM user_leaderboards WHERE userid = @uid AND leaderboardId = @lid`, (err, results) => {
       if (err){
         console.log(err);
-        res.sendStatus(500).send("Server Error");
+        res.sendStatus(500);
         return;
       }
       res.sendStatus(200);
@@ -118,13 +118,13 @@ router.post("/leaveLeaderboard", function (req, res, next) {
 
 router.post("/setUsername", function (req, res, next) {
   if (!req.body.username || !req.body.userid){
-    res.sendStatus(400).send("Wrong data suppplied");
+    res.sendStatus(400);
     return;
   }
   sql.connect(config, function (err) {
     if (err) {
       console.log(err);
-      res.sendStatus(500).send("Server error");
+      res.sendStatus(500);
       return;
     }
     var request = new sql.Request();
@@ -134,7 +134,7 @@ router.post("/setUsername", function (req, res, next) {
     request.query(`EXEC updateUserName @userid = @uid, @username=@uname`, (err, result) => {
       if (err) {
         console.log(err);
-        res.sendStatus(500).send("Server error");
+        res.sendStatus(500);
         return;
       }
       res.sendStatus(201);
@@ -148,7 +148,7 @@ router.get("/leaderboards", function (req, res, next) {
   sql.connect(config, function (err) {
     if (err){
       console.log(err);
-      res.sendStatus(500).send("Server error");
+      res.sendStatus(500);
       return;
     }  
     var request = new sql.Request();
@@ -159,7 +159,7 @@ router.get("/leaderboards", function (req, res, next) {
       function (err, recordset) {
         if (err){
           console.log(err);
-          res.sendStatus(500).send("Server error");
+          res.sendStatus(500);
           return;
         }
         res.json(recordset.recordsets[0]);
@@ -172,7 +172,7 @@ router.get("/users", function (req, res, next) {
   sql.connect(config, function (err) {
     if (err){
       console.log(err);
-      res.sendStatus(500).send("Server error");
+      res.sendStatus(500);
       return;
     }  
     var request = new sql.Request();
@@ -180,7 +180,7 @@ router.get("/users", function (req, res, next) {
       function (err, recordset) {
         if (err){
           console.log(err);
-          res.sendStatus(500).send("Server error");
+          res.sendStatus(500);
           return;
         }
         res.json(recordset.recordsets[0]);

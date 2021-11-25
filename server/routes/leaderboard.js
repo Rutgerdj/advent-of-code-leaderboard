@@ -16,7 +16,7 @@ router.get("/:leaderboardId/:year?/:day?", function (req, res, next) {
   sql.connect(config, function (err) {
     if (err){
       console.log(err);
-      res.sendStatus(500).send("Server error");
+      res.sendStatus(500);
       return;
     }  
     var request = new sql.Request();
@@ -38,7 +38,7 @@ router.get("/:leaderboardId/:year?/:day?", function (req, res, next) {
       function (err, recordset) {
         if (err){
           console.log(err);
-          res.sendStatus(500).send("Server error");
+          res.sendStatus(500);
           return;
         }
         res.json(recordset.recordsets[0]);
@@ -51,8 +51,7 @@ router.get("/:leaderboardId/:year?/:day?", function (req, res, next) {
 router.post("/:year/:day", function (req, res, next) {
   
   if (!req.params.year || !req.params.day || !req.body.userid){
-    console.log("watt?S")
-    res.sendStatus(400).send("Wrong data in request");
+    res.sendStatus(400);
     return;
   }
   sql.connect(config, function (err) {
@@ -77,7 +76,7 @@ router.post("/:year/:day", function (req, res, next) {
     `, (err, result) => {
       if (err) {
         console.log(err);
-        res.sendStatus(500).send("Server error");
+        res.sendStatus(500);
         return;
       }
       res.sendStatus(201);

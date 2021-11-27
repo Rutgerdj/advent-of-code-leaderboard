@@ -25,15 +25,21 @@ router.get("/:leaderboardId/:year?/:day?", function (req, res, next) {
     request.input("day", req.params.day);
     request.query(
       `
-      SELECT year, day, username, startTime, starOne, starTwo FROM user_leaderboards ul
-        INNER JOIN challenges ON challenges.userid = ul.userid
-        INNER JOIN users ON users.userid = ul.userid
-      WHERE
-        (leaderboardId = @leaderboardId OR @leaderboardId IS NULL)
-        AND
-        (year = @year OR @year IS NULL)
-        AND 
-        (day = @day OR @day IS NULL)
+      SELECT name, ISNULL((
+              SELECT users.username, year, day, startTime, starOne, starTwo
+          FROM challenges
+              INNER JOIN user_leaderboards ul ON ul.userid = challenges.userid
+              INNER JOIN users ON users.userid = ul.userid
+          WHERE 
+                  ul.leaderboardId = leaderboard.id
+              AND
+              (year = @year OR @year IS NULL)
+              AND
+              (day  = @year OR @year  IS NULL)
+
+          FOR JSON PATH, INCLUDE_NULL_VALUES), '[]') AS challenges
+      FROM leaderboard
+      WHERE id = @leaderboardId
     `,
       function (err, recordset) {
         if (err){
@@ -41,7 +47,18 @@ router.get("/:leaderboardId/:year?/:day?", function (req, res, next) {
           res.sendStatus(500);
           return;
         }
-        res.json(recordset.recordsets[0]);
+        let result = recordset.recordset;
+        if (result.length === 1){
+          result[0].challenges = JSON.parse(result[0].challenges);
+          res.json(result[0]);
+        } else {
+          res.json({
+            "name": "Not found",
+            "challenges": []
+          });
+        }
+        // console.log(result);
+        // res.json(recordset.recordsets[0]);
       }
     );
   });

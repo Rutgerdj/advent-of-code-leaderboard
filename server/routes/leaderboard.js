@@ -35,7 +35,7 @@ router.get("/:leaderboardId/:year?/:day?", function (req, res, next) {
               AND
               (year = @year OR @year IS NULL)
               AND
-              (day  = @year OR @year  IS NULL)
+              (day  = @day  OR @day  IS NULL)
 
           FOR JSON PATH, INCLUDE_NULL_VALUES), '[]') AS challenges
       FROM leaderboard

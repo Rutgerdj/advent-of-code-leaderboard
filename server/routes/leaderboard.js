@@ -81,14 +81,13 @@ router.post("/:year/:day", function (req, res, next) {
     if (req.body.starOne){
       starOne = new Date(req.body.starOne);
       if (starOne - start < 2000){
-        starOne.setMinutes(starOne.getMinutes() + 5);
+        starOne = null;
       }
-      start = starOne;
     }
     if (req.body.starTwo){
       starTwo = new Date(req.body.starTwo);
-      if (starTwo - start < 200){
-        starTwo.setMinutes(starTwo.getMinutes() + 5);
+      if (starTwo - start < 2000){
+        starTwo = null;
       }
     }
 

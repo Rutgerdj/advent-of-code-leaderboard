@@ -54,21 +54,12 @@ aocUU.Challenges = new function () {
         } else if (!c.starOne && stars == 1){
             console.log(`Got star 1 for day ${day}-l${year} at: ${new Date()}`);
             let starOne = new Date();
-            if (starOne - this.challenges[year][day].startTime < 2000){
-                starOne.setMinutes(starOne.getMinutes() + 5);
-            }
             this.challenges[year][day].starOne = starOne;
             return true;
         } else if (!c.starOne && !c.starTwo && (stars == 2 || (stars == 1 && progress.page == "answer"))){
             // Both challenges are already finished before the extension was installed ¯\_(ツ)_/¯
-            let starOne = new Date()
-            starOne.setMinutes(starOne.getMinutes() + 5)
-            this.challenges[year][day].starOne = starOne;
-
-            let starTwo = new Date()
-            starTwo.setMinutes(starOne.getMinutes() + 5)
-
-            this.challenges[year][day].starTwo = starTwo;
+            this.challenges[year][day].starOne = new Date();
+            this.challenges[year][day].starTwo = new Date();
             return true;
         }
     }

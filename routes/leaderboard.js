@@ -26,7 +26,7 @@ router.get("/:leaderboardId/:year?/:day?", function (req, res, next) {
     request.query(
       `
       SELECT name, ISNULL((
-              SELECT users.username, year, day, startTime, starOne, starTwo
+              SELECT users.userid, users.username, year, day, startTime, starOne, starTwo
           FROM challenges
               INNER JOIN user_leaderboards ul ON ul.userid = challenges.userid
               INNER JOIN users ON users.userid = ul.userid

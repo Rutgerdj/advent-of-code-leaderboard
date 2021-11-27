@@ -17,7 +17,7 @@ router.get("/registerExt", function (req, res, next) {
   sql.connect(config, function (err) {
     if (err) {
       console.log(err);
-      res.sendStatus(500).send("Server error");
+      res.sendStatus(500)
       return;
     }
 
@@ -29,7 +29,7 @@ router.get("/registerExt", function (req, res, next) {
     `, (err, recordsset) => {
       if (err) {
         console.log(err);
-        res.sendStatus(500).send("Server error");
+        res.sendStatus(500)
         return
       };
       if (recordsset.recordset.length > 0){
@@ -44,12 +44,12 @@ router.get("/registerExt", function (req, res, next) {
 router.post("/joinLeaderboard", function (req, res, next) {
   if (!req.body.userid || !req.body.leaderboardId){
     console.log("wrong ata");
-    res.sendStatus(400).send("Wrong data supplied");
+    res.sendStatus(400)
   }
   sql.connect(config, function (err) {
     if (err) {
       console.log(err);
-      res.sendStatus(500).send("Server error");
+      res.sendStatus(500)
       return;
     }
     var request = new sql.Request();
@@ -58,7 +58,7 @@ router.post("/joinLeaderboard", function (req, res, next) {
     request.query(`EXEC joinLeaderboard @userid = @uid, @leaderboardId=@lid`, (err, results) => {
       if (err){
         console.log(err);
-        res.sendStatus(500).send("Server Error");
+        res.sendStatus(500)
         return;
       }
       res.sendStatus(200);
@@ -89,7 +89,7 @@ router.post("/renameLeaderboard", function (req, res, next) {
       res.sendStatus(200);
     });
   });  
-})
+});
 
 router.post("/leaveLeaderboard", function (req, res, next) {
   if (!req.body.userid || !req.body.leaderboardId){

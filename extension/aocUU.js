@@ -42,7 +42,7 @@ window.aocUU = new function () {
             this.config.userName = userdata.username;
             this.config.githubPage = userdata.githubPage;
             this.config.profilePic = userdata.profilePic;
-            this.updateUserData();
+            this.sendUserData();
         }
         chrome.storage.local.set({ config: this.config });
     }
@@ -74,7 +74,7 @@ window.aocUU = new function () {
         }
     }
 
-    this.updateUserData = function () {
+    this.sendUserData = function () {
         if (!this.uuid) {
             console.error("No uuid registered.");
             return;
@@ -96,7 +96,7 @@ window.aocUU = new function () {
         chrome.storage.local.set({ config: config });
         if (this.config.userName != config.userName) {
             this.config.username = config.username;
-            this.setUsername(config.userName);
+            this.sendUserData();
         }
         this.config = config;
     }

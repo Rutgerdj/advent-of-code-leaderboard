@@ -57,8 +57,6 @@ router.get("/:leaderboardId/:year?/:day?", function (req, res, next) {
             "challenges": []
           });
         }
-        // console.log(result);
-        // res.json(recordset.recordsets[0]);
       }
     );
   });

@@ -32,8 +32,10 @@ if (window.location.href.match(/adventofcode\.com\/\d{4}\/settings/)){
     };
     let settings = document.querySelector("#settings");
     let url = settings.querySelector("#display_url");
-    if (url.checked){
-        userdata.githubPage = url.parentElement.querySelector("span").innerHTML.match(/https:\/\/github.com\/.+/)[0];
+    if (url && url.checked){
+        let match = url.parentElement.querySelector("span").innerHTML.match(/https:\/\/github.com\/.+/);
+        if (match)
+            userdata.githubPage = match[0];
     }
     
     settings.querySelectorAll("input[type=radio]").forEach((radio) => {

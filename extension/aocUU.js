@@ -1,7 +1,6 @@
 window.aocUU = new function () {
 
-    // this.host = "https://aoc-uu.herokuapp.com";
-    this.host = "http://localhost:3000";
+    this.host = "https://aoc-uu.herokuapp.com";
     this.uuid = null;
     this.config = {
     };

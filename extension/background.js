@@ -40,6 +40,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     case "getLeaderboards": 
       aocUU.getLeaderboards(sendResponse);
       break;
+    
+    case "updateUserdata":
+      aocUU.updateUserdata(message.userdata);
+      break;
   }
   return true;
 });
+

@@ -209,7 +209,7 @@ router.get("/users", function (req, res, next) {
       return;
     }  
     var request = new sql.Request();
-    request.query(`SELECT userid, username from users;`,
+    request.query(`SELECT userid, username, profilePic, githubPage from users;`,
       function (err, recordset) {
         if (err){
           console.log(err);

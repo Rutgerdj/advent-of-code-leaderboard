@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 var express = require("express");
 var router = express.Router();
 var leaderboardRouter = require('./leaderboard');
+var userRouter = require('./user');
 var sql = require("mssql");
 
 
@@ -116,6 +117,38 @@ router.post("/leaveLeaderboard", function (req, res, next) {
   });
 });
 
+
+router.post("/updateUserdata", function (req, res, next) {
+  if (!req.body.username || !req.body.userid){
+    res.sendStatus(400);
+    return;
+  }  
+  sql.connect(config, function (err) {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    var request = new sql.Request();
+    request.input("uname", req.body.username.slice(0, 36));
+    request.input("uid", req.body.userid.slice(0, 36));
+    request.input("pf", req.body.profilePic);
+    request.input("gh", req.body.githubPage);
+
+    request.query(`EXEC updateUserdata @userid = @uid, @username=@uname, @githubPage=@gh, @profilePic=@pf`, (err, result) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+        return;
+      }
+      res.sendStatus(201);
+    });
+
+  });
+
+
+});
+
 router.post("/setUsername", function (req, res, next) {
   if (!req.body.username || !req.body.userid){
     res.sendStatus(400);
@@ -190,5 +223,6 @@ router.get("/users", function (req, res, next) {
 })
 
 router.use("/leaderboard", leaderboardRouter);
+router.use("/user", userRouter);
 
 module.exports = router;

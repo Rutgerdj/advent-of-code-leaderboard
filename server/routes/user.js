@@ -40,7 +40,7 @@ router.get("/:userid/:year?/:day?", function (req, res, next) {
               FOR JSON PATH), '[]'
           ) AS challenges,
           ISNULL((
-              SELECT ul.leaderboardId, leaderboard.name FROM user_leaderboards ul
+              SELECT ul.leaderboardId as id, leaderboard.name FROM user_leaderboards ul
               INNER JOIN leaderboard ON leaderboard.id = ul.leaderboardId
                   WHERE
                       ul.userid = users.userid

@@ -1,3 +1,7 @@
+let leaderboards = [];
+const lbSelect = document.querySelector("#leaderboardSelect");
+
+
 document.querySelector("#saveBtn").addEventListener("click", (ev) => {
     chrome.runtime.sendMessage({
         command: "setConfig",
@@ -21,12 +25,15 @@ document.querySelector("#updateBtn").addEventListener("click", (ev) => {
 
 document.querySelectorAll(".leaderboardBtn").forEach((btn) => {
     btn.addEventListener("click", (ev) => {
-        chrome.runtime.sendMessage({
-            command: "leaderboardAction",
-            leaderboardId: document.querySelector("#leaderboardId").value,
-            action: btn.getAttribute("data-action"),
-            name: document.querySelector("#leaderboardName").value
-        }, () => {});
+        let selectedId = lbSelect.options[lbSelect.selectedIndex].value;
+        if (selectedId){
+            chrome.runtime.sendMessage({
+                command: "leaderboardAction",
+                leaderboardId: selectedId,
+                action: btn.getAttribute("data-action"),
+                name: document.querySelector("#leaderboardName").value
+            }, () => {});
+        }
     }); 
 });
 
@@ -36,5 +43,18 @@ chrome.runtime.sendMessage({
 }, (res) =>{
     if (res.config){
         document.querySelector("#userName").value = res.config.userName;
+    }
+});
+
+chrome.runtime.sendMessage({
+    command: "getLeaderboards"
+}, (res) => {
+    if (res.length > 0){
+        res.forEach((lb) => {
+            let opt = document.createElement("option");
+            opt.value = lb.id;
+            opt.innerHTML = lb.name
+            document.querySelector("#leaderboardSelect").appendChild(opt);
+        });
     }
 });

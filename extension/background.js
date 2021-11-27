@@ -36,6 +36,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     case "onChallengePage":
       aocUU.Challenges.onChallengePage(message.year, message.day, message.progress);
       break;
+
+    case "getLeaderboards": 
+      aocUU.getLeaderboards(sendResponse);
+      break;
   }
   return true;
 });

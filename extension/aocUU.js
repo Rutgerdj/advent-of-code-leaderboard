@@ -1,6 +1,7 @@
 window.aocUU = new function () {
 
-    this.host = "https://aoc-uu.herokuapp.com";
+    // this.host = "https://aoc-uu.herokuapp.com";
+    this.host = "http://localhost:3000";
     this.uuid = null;
     this.config = {
     };
@@ -27,6 +28,20 @@ window.aocUU = new function () {
                 aocUU.uuid = xhr.responseText;
             } else {
                 console.error(`Couldn't register extension`);
+            }
+        }
+        xhr.send();
+    }
+
+    this.getLeaderboards = function (cb) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", `${aocUU.host}/api/leaderboards`);
+        xhr.onload = function () {
+            if (xhr.status == 200){
+                cb(JSON.parse(xhr.responseText));
+            } else {
+                console.error(`Couldn't register extension`);
+                cb([])
             }
         }
         xhr.send();

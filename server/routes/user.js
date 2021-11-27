@@ -30,21 +30,21 @@ router.get("/:userid/:year?/:day?", function (req, res, next) {
           profilePic,
           githubPage,
           isNull((
-              SELECT users.userid, year, day, startTime, starOne, starTwo FROM challenges
+              SELECT users.userid, users.username, year, day, startTime, starOne, starTwo FROM challenges
                   WHERE
                       userid = users.userid
                       AND
                       (year = @year OR @year IS NULL)
                       AND
                       (day = @day OR @day IS NULL)
-              FOR JSON PATH), '[]'
+              FOR JSON PATH, INCLUDE_NULL_VALUES), '[]'
           ) AS challenges,
           ISNULL((
               SELECT ul.leaderboardId as id, leaderboard.name FROM user_leaderboards ul
               INNER JOIN leaderboard ON leaderboard.id = ul.leaderboardId
                   WHERE
                       ul.userid = users.userid
-              FOR JSON PATH), '[]'
+              FOR JSON PATH, INCLUDE_NULL_VALUES), '[]'
           ) AS leaderboards
       FROM users 
       WHERE 

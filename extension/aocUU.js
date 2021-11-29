@@ -65,7 +65,7 @@ window.aocUU = new function () {
         let urlMatch = url.match(
             /adventofcode\.com\/(\d{4})(\/day\/(\d{1,2})(\/answer)?)?/
         );
-        if (urlMatch[2]) {
+        if (urlMatch && urlMatch[2]) {
             const year = urlMatch[1];
             const day = urlMatch[3];
             if (year && day) {

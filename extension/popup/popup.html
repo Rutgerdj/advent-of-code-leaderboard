@@ -1,35 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src=".//popup.js"></script>
-    <title>Aoc UU leaderboard</title>
-</head>
-<body>
-    <div>
-        <h3>Settings</h3>
-        <div>    
-            <label for="userName">Username</label>
-            <input id="userName" type="text">
-        </div>
-        <button id="saveBtn">Save</button>
-        <hr>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script defer src=".//popup.js"></script>
+		<title>Aoc UU leaderboard</title>
+	</head>
+	<body>
+		<div>
+			<div id="succes" style="display: none"></div>
+			<h3>Settings</h3>
+			<div>
+				<label for="userName">Username</label>
+				<input id="userName" type="text" />
+			</div>
+			<button id="saveBtn">Save</button>
+			<hr />
 
-        <select id="leaderboardSelect"></select>
-        <button class="leaderboardBtn" data-action="join">Join leaderboard</button>
-        <button style="margin: 10px 0px;" class="leaderboardBtn" data-action="leave">Leave leaderboard</button>
+			<select id="leaderboardSelect"></select>
+			<button class="leaderboardBtn" data-action="join">
+				Join leaderboard
+			</button>
+			<button
+				style="margin: 10px 0px"
+				class="leaderboardBtn"
+				data-action="leave"
+			>
+				Leave leaderboard
+			</button>
 
-        <div>
-            <label for="leaderboardName">Leader board Name</label>
-            <input id="leaderboardName" type="text">
-            <button class="leaderboardBtn" data-action="rename">Rename leaderboard</button>
-        </div>
+			<div>
+				<label for="leaderboardName">Leader board Name</label>
+				<input id="leaderboardName" type="text" />
+				<button class="leaderboardBtn" data-action="rename">
+					Rename leaderboard
+				</button>
+			</div>
 
-        <hr>
+			<hr />
 
-        <button id="updateBtn">Force upload this challenge</button>
-    </div>
-</body>
+			<button id="updateBtn">Force upload this challenge</button>
+		</div>
+	</body>
 </html>

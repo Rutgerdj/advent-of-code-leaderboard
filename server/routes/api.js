@@ -67,6 +67,31 @@ router.post("/joinLeaderboard", function (req, res, next) {
   });
 });
 
+router.post("/createLeaderboard", function (req, res, next) {
+  if (!req.body.name || !req.body.userid){
+    res.sendStatus(400);
+    return;
+  } 
+  sql.connect(config, function (err) {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    var request = new sql.Request();
+    request.input("n", req.body.name);
+    request.input("uid", req.body.userid);
+    request.query(`EXEC createLeaderboard @name=@n, @userid=@uid`, (err, results) => {
+      if (err){
+        console.log(err);
+        res.sendStatus(500);
+        return;
+      }
+      res.sendStatus(200);
+    });
+  });  
+});
+
 router.post("/renameLeaderboard", function (req, res, next) {
   if (!req.body.name || !req.body.leaderboardId){
     res.sendStatus(400);

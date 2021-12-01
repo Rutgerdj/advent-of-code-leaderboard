@@ -1,5 +1,7 @@
 ## Advent of Code leaderboard
 
+[Frontend](https://github.com/Lightning2X/uu-aoc-leaderboard)
+
 ### Installation
 At this time it is only possible to use the extension on a chromium based browser.
 Can be installed as follows:\

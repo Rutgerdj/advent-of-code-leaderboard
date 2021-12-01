@@ -93,12 +93,9 @@ window.aocUU = new function () {
     }
 
     this.setConfig = function (config) {
-        chrome.storage.local.set({ config: config });
-        if (this.config.userName != config.userName) {
-            this.config.username = config.username;
-            this.sendUserData();
-        }
-        this.config = config;
+        this.config.username = config.username;
+        chrome.storage.local.set({ config: this.config });
+        this.sendUserData();
     }
 
     this.loadConfig = function () {

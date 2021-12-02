@@ -69,6 +69,7 @@ router.post("/:year/:day", function (req, res, next) {
     res.sendStatus(400);
     return;
   }
+  console.log(`UID: ${req.body.userid}, y: ${req.params.year}, d: ${req.params.day}`);
   sql.connect(config, function (err) {
     if (err) console.log(err);
     var request = new sql.Request();
